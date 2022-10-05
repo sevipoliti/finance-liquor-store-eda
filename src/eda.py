@@ -5,6 +5,9 @@ from pandas import DataFrame
 
 
 def scatter_plot(df: DataFrame, x: str, y: str, hue: str, title: str, fig_name: str) -> None:
+    """
+    Creates a scatter plot with hue.
+    """
     plt.figure(figsize=(20, 20), dpi=600)
     ax = sns.scatterplot(x=df[x],
                          y=df[y],
@@ -14,6 +17,9 @@ def scatter_plot(df: DataFrame, x: str, y: str, hue: str, title: str, fig_name: 
 
 
 def bar_plot(df: DataFrame, x: str, y: str, order_by: str, fig_name: str) -> None:
+    """
+    Creates two sorted barplots in descending order. The second barplot shows only the top 5 values.
+    """
     plt.figure(figsize=(20, 20), dpi=600)
     ax1 = sns.barplot(x=df[x], y=df[y],
                       orient="h",
@@ -36,11 +42,18 @@ def bar_plot(df: DataFrame, x: str, y: str, order_by: str, fig_name: str) -> Non
 # plt.show()
 
 
+def explore_data(df: DataFrame) -> None:
+    """
+    Check for columns' dtypes, null values, memory usage and descriptive statistics.
+    """
+    print(df.info())
+    print(df.describe())
+
+
 def main():
     # Read the csv file that contains the finance_liquor_sales data
     df = pd.read_csv("data/finance_liquor_sales_2016_2019.csv")
-    # Check for null values
-    print(df.isnull().sum())
+    explore_data(df)
     # Create a df containing the zip_code, item_description, bottles_sold
     sold_bottles_per_zipcode_df = df[["zip_code", "item_description", "bottles_sold"]]
     # Group by zip_code and item_description and sum the bottles sold for each group
